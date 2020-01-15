@@ -1,0 +1,32 @@
+#  Local .terraform directories
+**/.terraform/*
+
+.project
+.pydevproject
+
+# .tfstate files
+*.tfstate
+*.tfstate.*
+
+*.DS_Store
+
+node_modules/
+
+# Intellij #
+##########
+.idea/
+*.iml
+
+# Python #
+##########
+.pycache/
+*.pyc
+
+# Reports #
+Report/
+SIT/CashIn/Report/
+SIT/CashOut/HappyPath/Report/
+SIT/CashOut/NegativePath/Report/
+SIT/Cashout/SNS/Report/
+SIT/CrossBancar/Report/
+Logs/

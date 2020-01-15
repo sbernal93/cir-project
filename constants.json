@@ -1,8 +1,8 @@
 {
   "db_file_paths": {
-    "database": "data/movie_db.pkl",
-    "dict": "data/movie_dict.pkl",
-    "user_goals": "data/movie_user_goals.pkl"
+    "database": "data/flights_db.pkl",
+    "dict": "data/flights_dict.pkl",
+    "user_goals": "data/flight_user_goal.pkl"
   },
   "run": {
     "usersim": false,
@@ -13,15 +13,18 @@
     "success_rate_threshold": 0.3
   },
   "agent": {
-    "save_weights_file_path": "weights/model.h5",
-    "load_weights_file_path": "weights/model.h5",
-    "vanilla": true,
-    "learning_rate": 1e-3,
+    "save_weights_file_path": "weights/flights_model.h5",
+    "load_weights_file_path": "weights/flights_model.h5",
+    "vanilla": false,
+    "learning_rate": 1e-4,
     "batch_size": 16,
     "dqn_hidden_size": 80,
-    "epsilon_init": 0.0,
-    "gamma": 0.9,
-    "max_mem_size": 500000
+    "epsilon_init": 0.2,
+    "gamma": 0.6,
+    "max_mem_size": 500000,
+    "activation1": "relu",
+    "activation2": "linear",
+    "loss": "mse"
   },
   "emc": {
     "slot_error_mode": 0,

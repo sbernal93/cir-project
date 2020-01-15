@@ -11,22 +11,37 @@
 usersim_intents = ['inform', 'request', 'thanks', 'reject', 'done']
 
 # The goal of the agent is to inform a match for this key
-usersim_default_key = 'ticket'
+# usersim_default_key = 'ticket'
+usersim_default_key = 'quote'
 
 # Required to be in the first action in inform slots of the usersim if they exist in the goal inform slots
-usersim_required_init_inform_keys = ['moviename']
+# usersim_required_init_inform_keys = ['moviename']
+usersim_required_init_inform_keys = ['destinationAirport']
 
 #######################################
 # Agent Config
 #######################################
 
 # Possible inform and request slots for the agent
-agent_inform_slots = ['moviename', 'theater', 'starttime', 'date', 'genre', 'state', 'city', 'zip', 'critic_rating',
-                      'mpaa_rating', 'distanceconstraints', 'video_format', 'theater_chain', 'price', 'actor',
-                      'description', 'other', 'numberofkids', usersim_default_key]
-agent_request_slots = ['moviename', 'theater', 'starttime', 'date', 'numberofpeople', 'genre', 'state', 'city', 'zip',
-                       'critic_rating', 'mpaa_rating', 'distanceconstraints', 'video_format', 'theater_chain', 'price',
-                       'actor', 'description', 'other', 'numberofkids']
+
+#agent_inform_slots = ['destinationAirport', 'originAirport', 'carrier', 'outboundDate',
+#                      'inboundDate', 'outboundTime', 'inboundTime', usersim_default_key]
+
+agent_inform_slots = ['destinationAirport', 'originAirport', 'carrier', 'outboundDate',
+                      'outboundTime', usersim_default_key]
+
+#agent_request_slots = ['destinationAirport', 'originAirport', 'carrier', 'outboundDate',
+#                    'inboundDate', 'outboundTime', 'inboundTime']
+
+agent_request_slots = ['destinationAirport', 'originAirport', 'carrier', 'outboundDate','outboundTime']
+
+
+#agent_inform_slots = ['moviename', 'theater', 'starttime', 'date', 'genre', 'state', 'city', 'zip', 'critic_rating',
+#                      'mpaa_rating', 'distanceconstraints', 'video_format', 'theater_chain', 'price', 'actor',
+#                      'description', 'other', 'numberofkids', usersim_default_key]
+#agent_request_slots = ['moviename', 'theater', 'starttime', 'date', 'numberofpeople', 'genre', 'state', 'city', 'zip',
+#                       'critic_rating', 'mpaa_rating', 'distanceconstraints', 'video_format', 'theater_chain', 'price',
+#                       'actor', 'description', 'other', 'numberofkids']
 
 # Possible actions for agent
 agent_actions = [
@@ -42,10 +57,12 @@ for slot in agent_request_slots:
     agent_actions.append({'intent': 'request', 'inform_slots': {}, 'request_slots': {slot: 'UNK'}})
 
 # Rule-based policy request list
-rule_requests = ['moviename', 'starttime', 'city', 'date', 'theater', 'numberofpeople']
+#rule_requests = ['destinationAirport', 'originAirport', 'carrier', 'outboundDate', 'inboundDate', 'outboundTime', 'inboundTime']
+rule_requests = ['destinationAirport', 'originAirport', 'carrier', 'outboundDate', 'outboundTime']
+# rule_requests = ['moviename', 'starttime', 'city', 'date', 'theater', 'numberofpeople']
 
 # These are possible inform slot keys that cannot be used to query
-no_query_keys = ['numberofpeople', usersim_default_key]
+no_query_keys = ['carrier', usersim_default_key]
 
 #######################################
 # Global config
@@ -60,7 +77,12 @@ SUCCESS = 1
 all_intents = ['inform', 'request', 'done', 'match_found', 'thanks', 'reject']
 
 # All possible slots (for one-hot conversion in ST.get_state())
-all_slots = ['actor', 'actress', 'city', 'critic_rating', 'date', 'description', 'distanceconstraints',
-             'genre', 'greeting', 'implicit_value', 'movie_series', 'moviename', 'mpaa_rating',
-             'numberofpeople', 'numberofkids', 'other', 'price', 'seating', 'starttime', 'state',
-             'theater', 'theater_chain', 'video_format', 'zip', 'result', usersim_default_key, 'mc_list']
+#all_slots = ['destinationAirport', 'originAirport', 'carrier', 'outboundDate',
+#                      'inboundDate', 'outboundTime', 'inboundTime', usersim_default_key]
+
+all_slots = ['destinationAirport', 'originAirport', 'carrier', 'outboundDate',
+                    'outboundTime', usersim_default_key]
+# all_slots = ['actor', 'actress', 'city', 'critic_rating', 'date', 'description', 'distanceconstraints',
+#             'genre', 'greeting', 'implicit_value', 'movie_series', 'moviename', 'mpaa_rating',
+#             'numberofpeople', 'numberofkids', 'other', 'price', 'seating', 'starttime', 'state',
+#             'theater', 'theater_chain', 'video_format', 'zip', 'result', usersim_default_key, 'mc_list']

@@ -36,6 +36,9 @@ class DQNAgent:
         self.gamma = self.C['gamma']
         self.batch_size = self.C['batch_size']
         self.hidden_size = self.C['dqn_hidden_size']
+        self.activation2 = self.C['activation2']
+        self.activation1 = self.C['activation1']
+        self.loss = self.C['loss']
 
         self.load_weights_file_path = self.C['load_weights_file_path']
         self.save_weights_file_path = self.C['save_weights_file_path']
@@ -60,9 +63,9 @@ class DQNAgent:
         """Builds and returns model/graph of neural network."""
 
         model = Sequential()
-        model.add(Dense(self.hidden_size, input_dim=self.state_size, activation='relu'))
-        model.add(Dense(self.num_actions, activation='linear'))
-        model.compile(loss='mse', optimizer=Adam(lr=self.lr))
+        model.add(Dense(self.hidden_size, input_dim=self.state_size, activation=self.activation1))
+        model.add(Dense(self.num_actions, activation=self.activation2))
+        model.compile(loss=self.loss, optimizer=Adam(lr=self.lr))
         return model
 
     def reset(self):

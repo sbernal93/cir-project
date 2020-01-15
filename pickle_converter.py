@@ -14,14 +14,31 @@ def run(orig, dest):
     print("Done. Saved %s bytes." % (len(content) - outsize))
 
 
-original = "data/movie_db.pkl"
-destination = "data/movie_db.pkl"
-run(original, destination)
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--constants_path', dest='constants_path', type=str, default='')
+    args = parser.parse_args()
+    params = vars(args)
 
-original = "data/movie_dict.pkl"
-destination = "data/movie_dict.pkl"
-run(original, destination)
+    # Load constants json into dict
+    CONSTANTS_FILE_PATH = 'constants.json'
+    if len(params['constants_path']) > 0:
+        constants_file = params['constants_path']
+    else:
+        constants_file = CONSTANTS_FILE_PATH
 
-original = "data/movie_user_goals.pkl"
-destination = "data/movie_user_goals.pkl"
-run(original, destination)
+    with open(constants_file) as f:
+        constants = json.load(f)
+
+
+    original = constants['db_file_paths']['database']
+    destination = constants['db_file_paths']['database']
+    run(original, destination)
+
+    original = constants['db_file_paths']['dict']
+    destination = constants['db_file_paths']['dict']
+    run(original, destination)
+
+    original = constants['db_file_paths']['user_goals']
+    destination = constants['db_file_paths']['user_goals']
+    run(original, destination)
