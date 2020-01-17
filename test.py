@@ -71,12 +71,15 @@ def test_run():
     """
 
     print('Testing Started...')
+    print("Hello! Welcome to the flights reservation chat! Let me know what you're looking for")
     episode = 0
     while episode < NUM_EP_TEST:
-        episode_reset()
+        user_action = episode_reset()
         episode += 1
         ep_reward = 0
         done = False
+        if user_action['intent'] == 'close':
+            break
         # Get initial state from state tracker
         state = state_tracker.get_state()
         while not done:
@@ -86,6 +89,9 @@ def test_run():
             state_tracker.update_state_agent(agent_action)
             # User takes action given agent action
             user_action, reward, done, success = user.step(agent_action)
+            if user_action['intent'] == 'close':
+                break
+
             ep_reward += reward
             if not done:
                 # Infuse error into semantic frame level of user action
@@ -95,6 +101,8 @@ def test_run():
             # Grab "next state" as state
             state = state_tracker.get_state(done)
         print('Episode: {} Success: {} Reward: {}'.format(episode, success, ep_reward))
+        if user_action['intent'] == 'close':
+            break
     print('...Testing Ended')
 
 
@@ -111,6 +119,6 @@ def episode_reset():
     state_tracker.update_state_user(user_action)
     # Finally, reset agent
     dqn_agent.reset()
-
+    return user_action
 
 test_run()

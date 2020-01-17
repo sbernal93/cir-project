@@ -40,11 +40,17 @@ class User:
 
         response = {'intent': '', 'inform_slots': {}, 'request_slots': {}}
         while True:
-            input_string = input('Response: ')
+            input_string = input('Input>  ')
+
+            if input_string == 'exit':
+                print('Exiting the chat, have a good day!')
+                response['intent'] = 'close'
+                break
+
             chunks = input_string.split('/')
 
             if len(chunks) < 3 :
-                print('Invalid input')
+                print('Invalid input, please check that it follows the correct format')
                 continue
 
             intent_correct = True
@@ -86,8 +92,19 @@ class User:
 
         success = -2
         while success not in (-1, 0, 1):
-            success = int(input('Success?: '))
+            answer = input('Was the interaction successful? (y/n): ')
+            if answer == 'y':
+                success = 1
+            elif answer == 'n':
+                success = -1
         return success
+
+    def _evaluate_interaction(self):
+        rating = -1
+
+        while rating not in (1,2,3,4,5):
+            rating = int(input('How would you rate the interaction from 1 to 5?: '))
+        return rating
 
     def step(self, agent_action):
         """
@@ -116,6 +133,7 @@ class User:
         print('Agent Action: {}'.format(agent_action))
 
         done = False
+        success = 0
         user_response = {'intent': '', 'request_slots': {}, 'inform_slots': {}}
 
         # First check round num, if equal to max then fail
@@ -124,7 +142,11 @@ class User:
             user_response['intent'] = 'done'
         else:
             user_response = self._return_response()
+            #success = self._return_success()
+
+        if user_response['intent'] == 'done' or user_response['intent'] == 'thanks':
             success = self._return_success()
+            rating = self._evaluate_interaction()
 
         if success == FAIL or success == SUCCESS:
             done = True
